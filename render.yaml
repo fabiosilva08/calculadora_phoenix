@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: calculadora-phoenix
+    env: docker
+    plan: free
+    envVars:
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: PHX_SERVER
+        value: true
