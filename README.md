@@ -1,18 +1,21 @@
-# MeuApp
+# 🧮 Calculadora Phoenix LiveView
 
-To start your Phoenix server:
+Uma calculadora interativa desenvolvida em **Elixir** utilizando o **Phoenix Framework** e **Phoenix LiveView**, com processamento de expressões matemáticas em tempo real via WebSockets.
 
-* Run `mix setup` to install and setup dependencies
-* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## ✨ Funcionalidades
+* **Operações Básicas:** Adição, subtração, multiplicação e divisão.
+* **Recursos Extras:** Porcentagem (`%`), inversão de sinal (`+/-`), ponto decimal e botão de apagar dígito (`⌫`).
+* **Visor Contínuo:** Exibe a expressão matemática completa antes de calcular o resultado.
+* **Tempo Real:** Toda a lógica roda no servidor Elixir sem necessidade de escrever JavaScript manual ou criar APIs REST.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## 🚀 Como rodar o projeto localmente
+1. Instale as dependências:
+   ```bash
+   mix deps.get
+   ```
+2. Inicie o servidor Phoenix:
+   ```bash
+   mix phx.server
+   ```
+3. Acesse no navegador: [`http://localhost:4000/calculadora`](http://localhost:4000/calculadora)
 
-Ready to run in production? Please [check our deployment guides](https://phoenix.hexdocs.pm/deployment.html).
-
-## Learn more
-
-* Official website: https://www.phoenixframework.org/
-* Guides: https://phoenix.hexdocs.pm/overview.html
-* Docs: https://phoenix.hexdocs.pm
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
