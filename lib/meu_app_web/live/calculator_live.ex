@@ -1,36 +1,30 @@
 defmodule MeuAppWeb.CalculatorLive do
   use MeuAppWeb, :live_view
 
-  # 1. Estado inicial focado na expressão linear acumulada
   def mount(_params, _session, socket) do
     {:ok, assign(socket, display: "0", tokens: [], current_number: "0", fresh: true)}
   end
 
-  # 2. Renderização com o Visor de Expressão Contínua
   def render(assigns) do
     ~H"""
-    <!-- Fundo de toda a página Azul Escuro Profundo -->
     <div class="flex justify-center items-center min-h-screen bg-slate-950 font-sans antialiased p-4">
       
-      <!-- Corpo da Calculadora -->
       <div class="w-full max-w-sm p-6 bg-slate-900 rounded-[48px] shadow-2xl border border-slate-800/50">
         
-        <!-- Visor Linear Contínuo -->
         <div class="w-full text-right px-4 py-12 mb-4 min-h-[160px] flex flex-col justify-end bg-slate-950/40 rounded-3xl border border-slate-800/30">
           <div class="text-white text-4xl font-light tracking-wide break-all font-mono">
             <%= @display %>
           </div>
         </div>
 
-        <!-- Grade de Botões (Esquema Cinza) -->
         <div class="grid grid-cols-4 gap-4">
-          <!-- Linha 1: Funções de Controle -->
+          <!-- Funções de Controle -->
           <button phx-click="clear" class="btn-moto bg-neutral-700 text-neutral-100 hover:bg-neutral-600 font-medium">AC</button>
           <button phx-click="toggle_sign" class="btn-moto bg-neutral-700 text-neutral-100 hover:bg-neutral-600 font-medium">+/-</button>
           <button phx-click="press_op" phx-value-op="%" class="btn-moto bg-neutral-700 text-neutral-100 hover:bg-neutral-600 font-medium">%</button>
           <button phx-click="press_op" phx-value-op="/" class="btn-moto bg-neutral-700 text-neutral-100 hover:bg-neutral-600">÷</button>
 
-          <!-- Linha 2: Números e Operadores -->
+          <!-- Números e Operadores -->
           <button phx-click="press_num" phx-value-num="7" class="btn-moto bg-neutral-800 text-neutral-200 hover:bg-neutral-700">7</button>
           <button phx-click="press_num" phx-value-num="8" class="btn-moto bg-neutral-800 text-neutral-200 hover:bg-neutral-700">8</button>
           <button phx-click="press_num" phx-value-num="9" class="btn-moto bg-neutral-800 text-neutral-200 hover:bg-neutral-700">9</button>
@@ -76,14 +70,14 @@ defmodule MeuAppWeb.CalculatorLive do
     """
   end
 
-  # 3. Lógica de manipulação da cadeia de caracteres (String Stream)
+  # manipulação da cadeia de caracteres
   def handle_event("press_num", %{"num" => num}, socket) do
     if socket.assigns.fresh do
       {:noreply, assign(socket, display: num, current_number: num, fresh: false)}
     else
       last_char = String.last(socket.assigns.display)
       
-      # Evita colar número grudado após um operador especial (ex: %)
+      # evita colar o numero no operador especial
       if last_char == "%" do
         {:noreply, socket}
       else
@@ -113,7 +107,7 @@ defmodule MeuAppWeb.CalculatorLive do
     display = socket.assigns.display
     last_char = String.last(display)
 
-    # Impede de colocar dois operadores seguidos (substitui o último se clicado de novo)
+    # impede de colocar operadores iguais em sequencia
     if last_char in ["+", "-", "*", "/"] do
       new_display = String.slice(display, 0..-2) <> op
       {:noreply, assign(socket, display: new_display, current_number: "", fresh: false)}
